@@ -13,6 +13,7 @@ fail=0
 for d in "${dirs[@]}"; do
     d=${d%/}
     name=$(basename "$d")
+    [ -f "$d/Solution.swift" ] || continue   # thư mục chỉ có SKIPPED.md
     if swiftc -o "$out/$name" "$d/Solution.swift" "$d/main.swift" 2> "$out/$name.log" && "$out/$name" > "$out/$name.log" 2>&1; then
         echo "PASS  $name"
     else

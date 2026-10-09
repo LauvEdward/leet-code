@@ -122,6 +122,7 @@ pre {
   margin: 0; padding: 16px 18px; overflow-x: auto; background: var(--code-bg);
   border: 1px solid var(--line); border-radius: 10px; font-size: 13.5px; line-height: 1.6; tab-size: 4;
 }
+pre.trace { margin: 0 0 14px; font-size: 13px; }
 .copy {
   position: absolute; top: 8px; right: 8px; font: inherit; font-size: 12px; padding: 3px 10px; cursor: pointer;
   background: var(--panel); color: var(--muted); border: 1px solid var(--line); border-radius: 6px;
@@ -173,7 +174,7 @@ const VI = { Easy: 'Dễ', Medium: 'Trung bình', Hard: 'Khó' };
 
 const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-// Markdown tối giản: đoạn văn, danh sách (lồng 1 cấp), `code`, **đậm**, *nghiêng*
+// Markdown tối giản: đoạn văn, danh sách (lồng 1 cấp), khối ``` , `code`, **đậm**, *nghiêng*
 function inline(s) {
   // tách `code` ra trước để dấu * bên trong không bị hiểu là in đậm
   const codes = [];
@@ -187,10 +188,17 @@ function md(text) {
   const out = [];
   const stack = []; // các thẻ danh sách đang mở
   let para = [];
-  const flush = () => { if (para.length) { out.push('<p>' + inline(para.join(' ')) + '</p>'); para = []; } };
+  let fence = null; // các dòng của khối ``` đang mở
+  const flush = () => { if (para.length) { out.push('<p>' + para.map(inline).join('<br>') + '</p>'); para = []; } };
   const closeTo = n => { while (stack.length > n) out.push('</li></' + stack.pop() + '>'); };
 
   for (const line of text.split('\n')) {
+    if (line.startsWith('```')) {
+      if (fence) { out.push('<pre class="trace"><code>' + esc(fence.join('\n')) + '</code></pre>'); fence = null; }
+      else { flush(); closeTo(0); fence = []; }
+      continue;
+    }
+    if (fence) { fence.push(line); continue; }
     const m = line.match(/^(\s*)(-|\d+\.)\s+(.*)$/);
     if (m) {
       flush();

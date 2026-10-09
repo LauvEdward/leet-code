@@ -33,5 +33,39 @@ Giống bài I (4063): mảng con hợp lệ nếu tổng chia hết cho `k`, ho
 - Chuẩn hóa dư không âm bằng `((x % k) + k) % k` vì `nums` có số âm.
 - Test cục bộ: đối chiếu vét cạn trên 20.000 mảng ngẫu nhiên nhỏ, và chạy thử `n = 10⁵`, `k = 3000` để chắc không quá chậm.
 
+## Ví dụ chạy từng bước
+**Input:** `nums = [4, 1, 2]`, `k = 3`
+**Output:** `3`
+
+Khởi tạo: `first = [0, ∞, ∞]`, `order = [0]`, `e = [∞, ∞, ∞]`, `done = [0, 0, 0]`, `p = 0`.
+
+```
+r=0, x=4: s = 8 % 3 = 2
+   ghép với order[0..<1]:  u=0 → v=(0+2)%3=2 → e[2] = min(∞, first[0]=0) = 0
+   done[2] = 1
+   p = (0 + 4) % 3 = 1
+   l = min(first[1]=∞, e[1]=∞) = ∞ → chưa có mảng con hợp lệ kết thúc ở đây
+   first[1] = 1, order = [0, 1]
+
+r=1, x=1: s = 2 % 3 = 2
+   ghép với order[1..<2] (chỉ số dư MỚI, vì độ dịch 2 đã gặp):
+                           u=1 → v=(1+2)%3=0 → e[0] = min(∞, first[1]=1) = 1
+   done[2] = 2
+   p = (1 + 1) % 3 = 2
+   l = min(first[2]=∞, e[2]=0) = 0 → độ dài = 2 - 0 = 2 → best = 2
+   first[2] = 2, order = [0, 1, 2]
+
+r=2, x=2: s = 4 % 3 = 1
+   ghép với order[0..<3] (độ dịch 1 lần đầu xuất hiện):
+                           u=0 → v=1 → e[1] = 0
+                           u=1 → v=2 → e[2] = min(0, 1) = 0
+                           u=2 → v=0 → e[0] = min(1, 2) = 1
+   done[1] = 3
+   p = (2 + 2) % 3 = 1
+   l = min(first[1]=1, e[1]=0) = 0 → độ dài = 3 - 0 = 3 → best = 3
+```
+
+Ở `r = 2`: `first[1] = 1` ứng với mảng con `[1, 2]` (tổng 3, không cần đổi dấu, dài 2); `e[1] = 0` ứng với cả mảng `[4, 1, 2]` khi đổi dấu `2` (`4 + 1 - 2 = 3`, dài 3) — lấy `l` nhỏ hơn.
+
 ## Ghi nhớ
 Khi một phép cập nhật lặp lại chỉ phụ thuộc vào một cặp tham số rời rạc và dữ liệu nền chỉ **được thêm vào, không bị sửa**, hãy nhớ "đã xử lý tới đâu" cho từng tham số — tổng chi phí bị chặn bởi số cặp thay vì số bước. Và luôn nhìn ràng buộc: tham số nào nhỏ bất thường thì độ phức tạp được phép bình phương theo nó.

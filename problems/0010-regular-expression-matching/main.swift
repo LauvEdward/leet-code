@@ -1,0 +1,23 @@
+func check(_ s: String, _ p: String, _ want: Bool, line: UInt = #line) {
+    let got = Solution().isMatch(s, p)
+    precondition(got == want, "line \(line): \(s) ~ \(p): got \(got), want \(want)")
+}
+
+check("aa", "a", false)
+check("aa", "a*", true)
+check("ab", ".*", true)
+check("aab", "c*a*b", true)
+check("mississippi", "mis*is*p*.", false)
+check("mississippi", "mis*is*ip*.", true)
+check("", "", true)
+check("", "a*", true)
+check("", ".*", true)
+check("", "a", false)
+check("a", "", false)
+check("ab", ".*c", false)
+check("aaa", "a*a", true)
+check("aaa", "ab*a*c*a", true)
+check("a", "ab*", true)
+check("bbbba", ".*a*a", true)
+check("abcd", "d*", false)
+print("OK")

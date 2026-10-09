@@ -31,5 +31,29 @@ Với `n ≤ 1000`, `O(n²)` là quá đủ; Manacher chỉ cần khi `n` lên t
 - Cắt chuỗi **một lần** ở cuối, tránh tạo `String` trong vòng lặp.
 - Làm việc trên `Array(s)` để có chỉ số nguyên `O(1)`.
 
+## Ví dụ chạy từng bước
+**Input:** `s = "babad"`
+**Output:** `"bab"` (`"aba"` cũng đúng)
+
+```
+i=0: expand(0,0) "b"   → không mở rộng được → dài 1 → len=1, start=0
+     expand(0,1) b≠a   → dài 0
+i=1: expand(1,1) "a"   → l=0,r=2: b==b ✓ → l=-1 dừng → "bab" dài 3 → len=3, start=0
+     expand(1,2) a≠b   → dài 0
+i=2: expand(2,2) "b"   → l=1,r=3: a==a ✓ → l=0,r=4: b≠d dừng → "aba" dài 3 (không lớn hơn 3, giữ nguyên)
+     expand(2,3) b≠a   → dài 0
+i=3: expand(3,3) "a"   → l=2,r=4: b≠d → dài 1
+i=4: expand(4,4) "d"   → dài 1
+Kết quả: a[0..<3] = "bab"
+```
+
+**Input:** `s = "cbbd"` — palindrome độ dài chẵn
+**Output:** `"bb"`
+
+```
+i=1: expand(1,1) "b"   → l=0,r=2: c≠b → dài 1
+     expand(1,2) b==b ✓ → l=0,r=3: c≠d dừng → "bb" dài 2 → len=2, start=1
+```
+
 ## Ghi nhớ
 Bài palindrome → nghĩ "tâm đối xứng" trước. Nhớ xử lý **cả hai loại tâm**; quên tâm chẵn là lỗi thường gặp nhất (sai với `"cbbd"`).

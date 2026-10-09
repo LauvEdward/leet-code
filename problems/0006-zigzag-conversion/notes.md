@@ -30,5 +30,31 @@ Cách khác: tính trực tiếp chỉ số bằng chu kỳ `2 * (numRows - 1)` 
 - **Trường hợp biên `numRows == 1`**: dòng đầu cũng là dòng cuối, `step` sẽ thành `-1` và `r` chạy ra `-1` → crash. Phải trả về `s` ngay từ đầu.
 - Khi `numRows >= s.count` không cần xử lý riêng: mỗi ký tự một dòng, nối lại vẫn ra `s`.
 
+## Ví dụ chạy từng bước
+**Input:** `s = "PAYPALISHIRING"`, `numRows = 3`
+**Output:** `"PAHNAPLSIIGYIR"`
+
+Hình zigzag:
+
+```
+P   A   H   N
+A P L S I I G
+Y   I   R
+```
+
+Từng ký tự rơi vào dòng nào (`r`) và hướng đi sau đó (`step`):
+
+```
+P → r=0 (step=+1)    A → r=1    Y → r=2 (step=-1)    P → r=1
+A → r=0 (step=+1)    L → r=1    I → r=2 (step=-1)    S → r=1
+H → r=0 (step=+1)    I → r=1    R → r=2 (step=-1)    I → r=1
+N → r=0 (step=+1)    G → r=1
+
+rows[0] = "PAHN"
+rows[1] = "APLSIIG"
+rows[2] = "YIR"
+Nối lại: "PAHN" + "APLSIIG" + "YIR" = "PAHNAPLSIIGYIR"
+```
+
 ## Ghi nhớ
 Gặp bài "sắp xếp theo hình dạng rồi đọc lại", hãy hỏi: thông tin nào thật sự cần giữ? Ở đây chỉ là chỉ số dòng. Luôn thử trường hợp suy biến (`numRows = 1`) trước khi nộp.

@@ -163,10 +163,12 @@ pre {
 <script>
 const DATA = window.LC_DATA || [];
 const byId = new Map(DATA.map(p => [p.id, p]));
-const TABS = [['algorithms', 'Thuật toán'], ['concurrency', 'Concurrency']];
+const TABS = [['algorithms', 'Thuật toán'], ['concurrency', 'Concurrency'], ['contests', 'Contest']];
 let cat = 'algorithms';
 let level = 'Tất cả';
 const inCat = () => DATA.filter(p => p.category === cat);
+// tab chưa có bài nào thì ẩn đi
+const shownTabs = () => TABS.filter(([k]) => DATA.some(p => p.category === k));
 const VI = { Easy: 'Dễ', Medium: 'Trung bình', Hard: 'Khó' };
 
 const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -270,7 +272,7 @@ function currentId() {
 }
 
 function renderTabs() {
-  document.getElementById('tabs').innerHTML = TABS.map(([k, name]) =>
+  document.getElementById('tabs').innerHTML = shownTabs().map(([k, name]) =>
     `<button class="tab" role="tab" aria-selected="${k === cat}" data-c="${k}">${name}</button>`).join('');
   const count = l => inCat().filter(p => p.difficulty === l).length;
   document.getElementById('stats').textContent =

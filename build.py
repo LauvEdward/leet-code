@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Gom notes.md + Solution.swift trong problems/ và concurrency/, nhúng vào template.html để tạo index.html."""
+"""Gom notes.md + Solution.swift trong problems/, concurrency/ và contests/, nhúng vào template.html để tạo index.html."""
 import json
 import re
 from pathlib import Path
@@ -8,8 +8,8 @@ ROOT = Path(__file__).parent
 problems = []
 
 # thư mục -> tab trên trang web
-CATEGORIES = {"problems": "algorithms", "concurrency": "concurrency"}
-dirs = [(d, cat) for folder, cat in CATEGORIES.items() for d in sorted((ROOT / folder).glob("*/"))]
+CATEGORIES = {"problems/*/": "algorithms", "concurrency/*/": "concurrency", "contests/*/*/": "contests"}
+dirs = [(d, cat) for pattern, cat in CATEGORIES.items() for d in sorted(ROOT.glob(pattern))]
 
 for d, cat in dirs:
     notes = d / "notes.md"

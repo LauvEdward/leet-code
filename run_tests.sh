@@ -5,7 +5,8 @@
 cd "$(dirname "$0")" || exit 1
 
 dirs=("$@")
-[ ${#dirs[@]} -eq 0 ] && dirs=(problems/*/ concurrency/*/)
+shopt -s nullglob
+[ ${#dirs[@]} -eq 0 ] && dirs=(problems/*/ concurrency/*/ contests/*/*/)
 
 out=$(mktemp -d)
 fail=0

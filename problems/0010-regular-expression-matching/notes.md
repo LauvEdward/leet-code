@@ -35,5 +35,40 @@ Trường hợp gốc: `dp[m][n] = true` (cả hai cùng hết). Còn `dp[i][n]`
 - Kiểm tra `i < m` trong `first` đảm bảo không bao giờ đọc `dp[m + 1][…]`, vì nhánh đó bị `&&` chặn lại.
 - Có thể nén còn hai hàng để giảm bộ nhớ xuống `O(n)`, nhưng bảng đầy đủ dễ đọc và dễ debug hơn.
 
+## Ví dụ chạy từng bước
+**Input:** `s = "aab"`, `p = "c*a*b"`
+**Output:** `true`
+
+`dp[i][j]` trả lời: `s[i...]` có khớp `p[j...]` không. Bảng được điền từ dưới lên; dưới đây là các ô nằm trên đường dẫn tới đáp án:
+
+```
+dp[3][5]: ""    vs ""       → cả hai cùng hết                          → true
+dp[2][4]: "b"   vs "b"      → 'b' == 'b', xét tiếp dp[3][5]            → true
+dp[2][2]: "b"   vs "a*b"    → bỏ qua "a*", xét dp[2][4]                → true
+dp[1][2]: "ab"  vs "a*b"    → "a*" ăn 'a', ở lại j=2, xét dp[2][2]     → true
+dp[0][2]: "aab" vs "a*b"    → "a*" ăn 'a', ở lại j=2, xét dp[1][2]     → true
+dp[0][0]: "aab" vs "c*a*b"  → bỏ qua "c*" (dùng 0 lần), xét dp[0][2]   → true
+```
+
+Toàn bộ bảng (`T` = true, `.` = false), cột là `j`, hàng là `i`:
+
+```
+            j=0   1   2   3   4   5
+p[j...]  =  c*a*b      a*b     b   ""
+i=0 "aab"    T    .   T   .   .   .
+i=1 "ab"     T    .   T   .   .   .
+i=2 "b"      T    .   T   .   T   .
+i=3 ""       .    .   .   .   .   T
+```
+
+**Input:** `s = "aa"`, `p = "a"` → **Output:** `false`
+
+```
+dp[2][1] = true
+dp[1][0]: "a"  vs "a" → khớp, xét dp[2][1] → true
+dp[0][0]: "aa" vs "a" → khớp 'a', xét dp[1][1]: "a" vs "" → false
+→ false (mẫu hết mà chuỗi còn)
+```
+
 ## Ghi nhớ
 So khớp hai chuỗi (regex, wildcard, edit distance, LCS) → DP hai chiều trên cặp chỉ số `(i, j)`. Với `*`, nghĩ theo cụm `x*` và hai lựa chọn "bỏ qua" / "ăn thêm một ký tự, ở lại chỗ cũ".

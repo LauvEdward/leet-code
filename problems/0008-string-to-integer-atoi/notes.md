@@ -32,5 +32,36 @@ Cạm bẫy: chuỗi có thể dài 200 ký tự toàn chữ số → tràn cả
 - `Character.wholeNumberValue` trả `Int?` — vừa kiểm tra "là chữ số" vừa lấy giá trị. Kèm `isASCII` để không nhận nhầm chữ số Unicode khác (ví dụ `"٣"`).
 - Nhân dấu **sau cùng**, rồi kẹp: xử lý đúng cả `-2147483648`.
 
+## Ví dụ chạy từng bước
+**Input:** `s = "   -042"` → **Output:** `-42`
+
+```
+Pha 1 (khoảng trắng): bỏ 3 dấu cách       → i=3
+Pha 2 (dấu):          gặp '-' → sign=-1   → i=4
+Pha 3 (chữ số):       '0' → res=0
+                      '4' → res=4
+                      '2' → res=42        → hết chuỗi
+res = 42 * (-1) = -42, nằm trong khoảng → trả về -42
+```
+
+**Input:** `s = "1337c0d3"` → **Output:** `1337`
+
+```
+Không có khoảng trắng, không có dấu.
+'1' → 1, '3' → 13, '3' → 133, '7' → 1337, gặp 'c' → dừng đọc
+Trả về 1337
+```
+
+**Input:** `s = "-91283472332"` → **Output:** `-2147483648`
+
+```
+sign = -1
+9 → 91 → 912 → 9128 → 91283 → 912834 → 9128347 → 91283472 → 912834723
+→ 9128347233 > 2147483647 → break (bỏ các chữ số còn lại)
+res = -9128347233 → kẹp về Int32.min = -2147483648
+```
+
+**Input:** `s = "+-12"` → **Output:** `0` (sau `+` là `-`, không phải chữ số nên pha 3 không đọc được gì).
+
 ## Ghi nhớ
 Với bài parsing, viết ra danh sách các pha rồi code từng pha một, kiểm tra `i < a.count` ở mọi chỗ truy cập. Thử các ca: rỗng, toàn dấu cách, chỉ có dấu, hai dấu liền nhau, tràn dương, tràn âm.

@@ -40,5 +40,38 @@ Chỉ cần xét việc xóa phần tử **nằm giữa** mảng con: xóa ở n
 - Tính bốn giá trị mới vào biến tạm rồi mới gán, tránh dùng nhầm giá trị đã cập nhật.
 - Test cục bộ đối chiếu với vét cạn (thử xóa từng phần tử, thử mọi mảng con) trên 5000 mảng ngẫu nhiên.
 
+## Ví dụ chạy từng bước
+**Input:** `nums = [10, -5, -100]`
+**Output:** `110` (xóa `-5`, chọn `[10, -100]` → `10 - (-100)`)
+
+Ký hiệu `-∞` là "chưa có trạng thái". `pp0`, `pm0` là `p0`, `m0` của vị trí trước đó nữa.
+
+```
+Khởi tạo: p0 = m0 = p1 = m1 = -∞, pp0 = pm0 = -∞
+
+x = 10:
+   p0 = max(10, m0 + 10)        = 10      mảng con [10]
+   m0 = p0_cũ - 10              = -∞
+   p1 = max(m1, pm0) + 10       = -∞
+   m1 = max(p1, pp0) - 10       = -∞
+   best = 10
+
+x = -5:   (pp0 = -∞, pm0 = -∞ lấy từ trước bước x = 10)
+   p0 = max(-5, m0 + (-5))      = -5      mảng con [-5]
+   m0 = p0_cũ - (-5) = 10 + 5   = 15      mảng con [10, -5]
+   p1 = max(m1, pm0) + (-5)     = -∞
+   m1 = max(p1, pp0) - (-5)     = -∞
+   best = 15
+
+x = -100: (pp0 = 10, pm0 = -∞ là p0, m0 sau bước x = 10)
+   p0 = max(-100, 15 - 100)     = -85     mảng con [10, -5, -100]
+   m0 = -5 + 100                = 95      mảng con [-5, -100]
+   p1 = max(m1, pm0) - 100      = -∞
+   m1 = max(p1, pp0) + 100      = 10 + 100 = 110   xóa -5, nối -100 sau [10]
+   best = 110
+```
+
+**Input:** `nums = [5, -5, 1]` → **Output:** `11` — không xóa gì: `5 - (-5) + 1`, đến từ trạng thái `p0` ở bước cuối (`m0 + 1 = 10 + 1`).
+
 ## Ghi nhớ
 "Mảng con tối ưu + được phép làm X tối đa một lần" → Kadane với thêm một chiều "đã dùng X chưa". Khi thao tác là *xóa*, nhớ trạng thái của vị trí `i - 2` để nối qua phần tử bị xóa.

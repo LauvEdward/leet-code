@@ -28,5 +28,25 @@ Cho số nguyên `x`, trả về `true` nếu `x` đọc xuôi ngược như nha
 - Giữ nguyên `x` để so sánh, làm việc trên bản sao `n`.
 - `x = 0` → vòng lặp không chạy, `rev = 0 == x` → `true`. Các số tận cùng bằng 0 như `10` → `rev = 1 ≠ 10` → `false`, tự đúng.
 
+## Ví dụ chạy từng bước
+**Input:** `x = 121` → **Output:** `true`
+
+```
+n=121, rev=0  → rev = 1,   n = 12
+n=12,  rev=1  → rev = 12,  n = 1
+n=1,   rev=12 → rev = 121, n = 0 → dừng
+rev == x (121 == 121) → true
+```
+
+**Input:** `x = 10` → **Output:** `false`
+
+```
+n=10, rev=0 → rev = 0, n = 1
+n=1,  rev=0 → rev = 1, n = 0 → dừng
+rev == x ? 1 ≠ 10 → false
+```
+
+**Input:** `x = -121` → **Output:** `false` (số âm bị loại ngay ở dòng đầu).
+
 ## Ghi nhớ
 Bài dễ nhưng là dịp ôn mẫu "tách và ghép chữ số". Nếu ngôn ngữ dùng số 32 bit thật thì dùng biến thể "đảo nửa sau" để khỏi lo tràn.

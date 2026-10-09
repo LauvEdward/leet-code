@@ -32,5 +32,38 @@ Cho hai mảng đã sắp xếp `nums1` (độ dài `m`) và `nums2` (độ dài
 - Khi tổng chẵn: `(max(aL, bL) + min(aR, bR)) / 2`.
 - Cách "lười" vẫn qua được LeetCode: `(nums1 + nums2).sorted()` rồi lấy phần tử giữa — `O((m+n) log(m+n))`, đáng biết để viết nhanh khi phỏng vấn trước khi tối ưu.
 
+## Ví dụ chạy từng bước
+**Input:** `nums1 = [1, 3]`, `nums2 = [2]`
+**Output:** `2.0`
+
+Sau khi hoán đổi: `a = [2]` (ngắn hơn), `b = [1, 3]`, `m = 1`, `n = 2`, `half = 2`.
+
+```
+lo=0, hi=1 → i=0, j=2
+   aL=-∞  aR=2  |  bL=3  bR=+∞
+   bL=3 > aR=2 → lấy quá ít từ a → lo = 1
+
+lo=1, hi=1 → i=1, j=1
+   aL=2  aR=+∞  |  bL=1  bR=3
+   aL <= bR và bL <= aR → phép cắt hợp lệ
+   tổng 3 phần tử (lẻ) → trung vị = max(aL, bL) = max(2, 1) = 2
+```
+
+**Input:** `nums1 = [1, 2]`, `nums2 = [3, 4]`
+**Output:** `2.5`
+
+`a = [1, 2]`, `b = [3, 4]`, `m = n = 2`, `half = 2`.
+
+```
+lo=0, hi=2 → i=1, j=1
+   aL=1  aR=2  |  bL=3  bR=4
+   bL=3 > aR=2 → lo = 2
+
+lo=2, hi=2 → i=2, j=0
+   aL=2  aR=+∞  |  bL=-∞  bR=3
+   hợp lệ; tổng 4 phần tử (chẵn)
+   → (max(2, -∞) + min(+∞, 3)) / 2 = (2 + 3) / 2 = 2.5
+```
+
 ## Ghi nhớ
 Mấu chốt là đổi câu hỏi từ "tìm phần tử thứ k" thành "tìm vị trí cắt hợp lệ". Luôn nhị phân trên mảng ngắn hơn và dùng lính canh `±∞` cho biên — hai mẹo này loại bỏ gần hết lỗi lệch-một.

@@ -35,5 +35,35 @@ Một chuỗi chỉ gồm `a`, `b` là *good* nếu: (1) nó chỉ có một lo�
 - Độ sâu đệ quy chỉ khoảng `log₂(10¹⁵) ≈ 50`.
 - Test cục bộ: hàm `good` viết đúng theo định nghĩa đệ quy của đề, vét cạn mọi chuỗi độ dài `≤ 14` để xác nhận công thức `2·F(n)`; rồi đối chiếu fast doubling với vòng lặp thường tới `n = 5000`.
 
+## Ví dụ chạy từng bước
+**Input:** `n = 4`
+**Output:** `6`
+
+Cách nhìn tổ hợp — các cách viết 4 thành tổng có thứ tự của số lẻ, mỗi cách cho 2 chuỗi (bắt đầu bằng `a` hoặc `b`):
+
+```
+1 + 3         → "abbb", "baaa"
+3 + 1         → "aaab", "bbba"
+1 + 1 + 1 + 1 → "abab", "baba"
+→ F(4) = 3 cách × 2 = 6
+```
+
+Fast doubling tính `F(4)` — `fib(n)` trả về `(F(n), F(n+1))`:
+
+```
+fib(4) gọi fib(2) gọi fib(1) gọi fib(0)
+
+fib(0) = (0, 1)
+fib(1): a=0, b=1 → c = 0·(2·1 - 0) = 0, d = 0² + 1² = 1 → n lẻ  → (d, c+d) = (1, 1)
+fib(2): a=1, b=1 → c = 1·(2·1 - 1) = 1, d = 1² + 1² = 2 → n chẵn → (c, d)   = (1, 2)
+fib(4): a=1, b=2 → c = 1·(2·2 - 1) = 3, d = 1² + 2² = 5 → n chẵn → (c, d)   = (3, 5)
+
+Đáp án = 2 · F(4) = 2 · 3 = 6
+```
+
+Chỉ 4 lần gọi cho `n = 4`; với `n = 10¹⁵` cũng chỉ khoảng 50 lần.
+
+**Input:** `n = 3` → **Output:** `4` (`F(3) = 2`: các cách `3` và `1+1+1` → `"aaa"`, `"bbb"`, `"aba"`, `"bab"`).
+
 ## Ghi nhớ
 Bài đếm với `n` khổng lồ (`10¹⁵`, `10¹⁸`) → đáp án gần như chắc chắn là một công thức đóng hoặc truy hồi tuyến tính tính bằng lũy thừa nhanh. Cách tìm: viết vét cạn cho `n` nhỏ, nhìn dãy số (`2, 2, 4, 6, 10, 16…` — Fibonacci nhân đôi), rồi mới chứng minh. Định nghĩa đệ quy rắc rối thường rút gọn được thành một tính chất cấu trúc đơn giản.

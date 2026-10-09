@@ -33,5 +33,21 @@ Cách sai thường gặp: dùng biến cờ `Bool` rồi lặp `while !done {}`
 - `third`: `s2.wait()` → in.
 - Nếu `third` được gọi đầu tiên, nó ngủ ở `s2.wait()`; `second` ngủ ở `s1.wait()`; chỉ `first` chạy được, và dây chuyền tự mở dần.
 
+## Ví dụ chạy từng bước
+**Input:** `nums = [3, 1, 2]` — nghĩa là luồng A gọi `third()`, luồng B gọi `first()`, luồng C gọi `second()`, theo đúng thứ tự khởi động đó.
+**Output:** `"firstsecondthird"`
+
+Ban đầu `s1 = 0`, `s2 = 0`.
+
+```
+Luồng A: third()  → s2.wait(): s2 = 0 → NGỦ
+Luồng B: first()  → in "first" → s1.signal(): s1 = 1
+Luồng C: second() → s1.wait(): s1 = 1 → 0, đi tiếp
+                  → in "second" → s2.signal(): đánh thức luồng A
+Luồng A: (thức dậy) → in "third"
+```
+
+Nếu luồng C chạy trước cả luồng B thì nó ngủ ở `s1.wait()` y như luồng A ngủ ở `s2.wait()`; chỉ `first()` là không phải chờ ai, nên kết quả luôn giống nhau.
+
 ## Ghi nhớ
 "Sự kiện A phải xảy ra trước B" → một semaphore giá trị 0, A `signal`, B `wait`. Đây là viên gạch cơ bản cho mọi bài sắp thứ tự luồng. Với Swift hiện đại (async/await) có thể dùng `AsyncStream` hay continuation, nhưng semaphore vẫn là cách diễn đạt trực tiếp nhất cho bài kiểu này.

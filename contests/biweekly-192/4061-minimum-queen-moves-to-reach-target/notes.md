@@ -26,5 +26,23 @@ Trên bàn cờ 8×8 trống, quân hậu ở ô `source`, cần tới ô `targe
 - Tính `dr = |sr - tr|`, `dc = |sc - tc|`, rồi ba câu `if`.
 - Test cục bộ: chạy BFS thật trên bàn 8×8 cho **toàn bộ** `64 × 64` cặp ô và so với công thức.
 
+## Ví dụ chạy từng bước
+**Input:** `source = [8, 1]`, `target = [1, 8]` → **Output:** `1`
+
+```
+dr = |8 - 1| = 7, dc = |1 - 8| = 7
+dr == dc → cùng đường chéo → 1 nước
+```
+
+**Input:** `source = [4, 2]`, `target = [1, 3]` → **Output:** `2`
+
+```
+dr = |4 - 1| = 3, dc = |2 - 3| = 1
+không trùng ô (dr, dc ≠ 0), không cùng hàng (dr ≠ 0), không cùng cột (dc ≠ 0), không cùng chéo (3 ≠ 1)
+→ 2 nước, ví dụ (4,2) → (4,3) → (1,3)
+```
+
+**Input:** `source = [1, 1]`, `target = [1, 1]` → **Output:** `0` (`dr = dc = 0`).
+
 ## Ghi nhớ
 Trước khi viết BFS, hỏi "đáp án lớn nhất có thể là bao nhiêu?". Nếu bị chặn bởi hằng số nhỏ thì chỉ cần xét từng trường hợp. So sánh: mã cần BFS thật, tượng thì `0/1/2` hoặc không tới được (khác màu ô), xe và hậu luôn `≤ 2`.

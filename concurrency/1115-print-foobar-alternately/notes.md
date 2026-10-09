@@ -29,5 +29,23 @@ Hai luồng cùng dùng một đối tượng `FooBar(n)`: luồng A gọi `foo(
 - Vòng lặp của `bar`: `barSem.wait()` → in → `fooSem.signal()`.
 - Sau vòng cuối, `bar` vẫn `signal` cho `fooSem` thêm một lần thừa — vô hại vì không còn ai chờ.
 
+## Ví dụ chạy từng bước
+**Input:** `n = 2`
+**Output:** `"foobarfoobar"`
+
+Ban đầu `fooSem = 1`, `barSem = 0`. Giả sử luồng `bar` được chạy trước:
+
+```
+bar (vòng 1): barSem.wait(): 0 → NGỦ
+foo (vòng 1): fooSem.wait(): 1 → 0 → in "foo" → barSem.signal()
+foo (vòng 2): fooSem.wait(): 0 → NGỦ
+bar (vòng 1): (thức dậy) → in "bar" → fooSem.signal()
+bar (vòng 2): barSem.wait(): 0 → NGỦ
+foo (vòng 2): (thức dậy) → in "foo" → barSem.signal() → xong
+bar (vòng 2): (thức dậy) → in "bar" → fooSem.signal() (thừa, vô hại) → xong
+```
+
+Dù hệ điều hành xếp lịch thế nào, mỗi luồng chỉ in được khi nhận "thẻ lượt" từ luồng kia.
+
 ## Ghi nhớ
 Hai luồng xen kẽ → hai semaphore, mỗi bên `wait` cái của mình và `signal` cái của bên kia. Mutex bảo vệ dữ liệu; semaphore (hoặc condition variable) mới điều khiển **thứ tự**.

@@ -28,5 +28,29 @@ Cho hai mảng `source`, `target` cùng độ dài `n ≥ 2`. Mỗi thao tác ch
 - Tổng tối đa cỡ `10⁵ × 10⁹ = 10¹⁴`, vừa `Int` 64 bit.
 - Test cục bộ: ngoài so sánh tổng, còn chạy đúng chuỗi thao tác ở bước 3 để xác nhận nó thật sự tạo ra `target`.
 
+## Ví dụ chạy từng bước
+**Input:** `source = [1, 2, 3]`, `target = [0, 2, 4]` → **Output:** `true`
+
+```
+sum(source) = 1 + 2 + 3 = 6
+sum(target) = 0 + 2 + 4 = 6
+6 == 6 → true
+```
+
+Dựng lại chuỗi thao tác để thấy vì sao tổng bằng nhau là đủ — dùng phần tử cuối (`i = 2`) làm thùng chứa:
+
+```
+Ban đầu:               [1, 2, 3]
+j=0, delta=target[0]=0: source[2] = 3 + 1 - 0 = 4, source[0] = 0 → [0, 2, 4]
+j=1, delta=target[1]=2: source[2] = 4 + 2 - 2 = 4, source[1] = 2 → [0, 2, 4]
+Hai phần tử đầu đã khớp; phần tử cuối tự bằng 6 - 0 - 2 = 4 ✓
+```
+
+**Input:** `source = [1, 2, 1]`, `target = [0, 2, 5]` → **Output:** `false`
+
+```
+sum(source) = 4, sum(target) = 7 → khác nhau → false
+```
+
 ## Ghi nhớ
 Đề cho thao tác trông rắc rối với tham số tự do (`delta` bất kỳ) → gần như chắc chắn có một bất biến đơn giản (tổng, tính chẵn lẻ, XOR, gcd…) và đáp án chỉ là so sánh bất biến đó. Đừng mô phỏng; hãy cộng hai vế lại xem cái gì không đổi.

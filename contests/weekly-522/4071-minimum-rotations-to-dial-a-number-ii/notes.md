@@ -32,5 +32,31 @@ Giống bài I (mặt số tròn `0…9`, kim bắt đầu ở `0`), nhưng chu�
 - Một vòng tính `total`, một vòng lấy `min` theo công thức delta.
 - Test cục bộ đối chiếu với cách vét cạn (đảo thật rồi mô phỏng) trên chuỗi ngẫu nhiên ngắn.
 
+## Ví dụ chạy từng bước
+**Input:** `n = 4`, `s = "1502"`
+**Output:** `9`
+
+Bước 1 — chi phí khi không đảo:
+
+```
+0 → 1 : 1
+1 → 5 : 4
+5 → 0 : 5
+0 → 2 : 2
+total = 12
+```
+
+Bước 2 — thử từng `k`, chỉ tính phần chênh lệch ở bước nối. Chữ số cuối là `s[3] = 2`:
+
+```
+k=0: p=0 (kim ban đầu)  12 - d(0,1) + d(0,2) = 12 - 1 + 2 = 13    chuỗi thành "2051"
+k=1: p=1                12 - d(1,5) + d(1,2) = 12 - 4 + 1 = 9     chuỗi thành "1205"  ← nhỏ nhất
+k=2: p=5                12 - d(5,0) + d(5,2) = 12 - 5 + 3 = 10    chuỗi thành "1520"
+k=3: p=0                12 - d(0,2) + d(0,2) = 12                 không đổi gì
+best = 9
+```
+
+Kiểm tra lại `k = 1` bằng mô phỏng `"1205"`: `0→1` (1) + `1→2` (1) + `2→0` (2) + `0→5` (5) = 9.
+
 ## Ghi nhớ
 "Được làm một thao tác tối đa một lần" → hỏi: thao tác đó thay đổi **bao nhiêu số hạng** của hàm mục tiêu? Thường chỉ một vài số hạng ở biên, nên mỗi lựa chọn tính được trong `O(1)`. Đảo đoạn + chi phí đối xứng giữa các phần tử kề = chỉ biên thay đổi (cùng ý tưởng với 2-opt trong bài người du lịch).

@@ -28,5 +28,25 @@ Cho mảng số nguyên `nums` và số `target`. Trả về chỉ số của ha
 - **Tra trước, ghi sau**: thứ tự này xử lý đúng trường hợp hai số bằng nhau như `[3, 3]`, `target = 6`.
 - `return []` ở cuối chỉ để trình biên dịch vui lòng — đề đảm bảo luôn có đáp án.
 
+## Ví dụ chạy từng bước
+**Input:** `nums = [2, 7, 11, 15]`, `target = 9`
+**Output:** `[0, 1]`
+
+```
+i=0, x=2 : cần 9-2 = 7, seen = {}        → chưa có → ghi seen = {2: 0}
+i=1, x=7 : cần 9-7 = 2, seen = {2: 0}    → có 2 ở vị trí 0 → trả về [0, 1]
+```
+
+**Input:** `nums = [3, 2, 4]`, `target = 6`
+**Output:** `[1, 2]`
+
+```
+i=0, x=3 : cần 3, seen = {}              → chưa có → seen = {3: 0}
+i=1, x=2 : cần 4, seen = {3: 0}          → chưa có → seen = {3: 0, 2: 1}
+i=2, x=4 : cần 2, seen = {3: 0, 2: 1}    → có 2 ở vị trí 1 → trả về [1, 2]
+```
+
+Ở ví dụ 2, số `3` cần chính nó (`3 + 3 = 6`) nhưng vì tra trước khi ghi nên không tự ghép với mình.
+
 ## Ghi nhớ
 Thấy đề hỏi "tìm cặp thỏa điều kiện tổng/hiệu" trên mảng **chưa sắp xếp** → nghĩ ngay tới bảng băm. Nếu mảng đã sắp xếp → hai con trỏ, không cần bộ nhớ phụ.

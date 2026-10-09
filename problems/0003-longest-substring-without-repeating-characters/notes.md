@@ -28,5 +28,30 @@ Cho chuỗi `s`, tìm độ dài của chuỗi con (liên tiếp) dài nhất kh
 - Cập nhật `best = max(best, i - start + 1)` sau mỗi bước.
 - Muốn nhanh hơn thì đổi `Dictionary` thành mảng 128 ô duyệt trên `s.utf8`, nhưng bản này đã đủ qua và dễ đọc hơn.
 
+## Ví dụ chạy từng bước
+**Input:** `s = "abcabcbb"`
+**Output:** `3` (chuỗi con `"abc"`)
+
+```
+i=0 'a': chưa gặp                 → start=0, cửa sổ "a",   best=1
+i=1 'b': chưa gặp                 → start=0, cửa sổ "ab",  best=2
+i=2 'c': chưa gặp                 → start=0, cửa sổ "abc", best=3
+i=3 'a': last[a]=0 >= start=0     → start=1, cửa sổ "bca", best=3
+i=4 'b': last[b]=1 >= start=1     → start=2, cửa sổ "cab", best=3
+i=5 'c': last[c]=2 >= start=2     → start=3, cửa sổ "abc", best=3
+i=6 'b': last[b]=4 >= start=3     → start=5, cửa sổ "cb",  best=3
+i=7 'b': last[b]=6 >= start=5     → start=7, cửa sổ "b",   best=3
+```
+
+**Input:** `s = "abba"` — ca cho thấy vì sao cần điều kiện `j >= start`
+**Output:** `2`
+
+```
+i=0 'a': start=0, cửa sổ "a",  best=1
+i=1 'b': start=0, cửa sổ "ab", best=2
+i=2 'b': last[b]=1 >= 0  → start=2, cửa sổ "b",  best=2
+i=3 'a': last[a]=0 <  2  → KHÔNG đổi start, cửa sổ "ba", best=2
+```
+
 ## Ghi nhớ
 Cụm "chuỗi con / mảng con **liên tiếp** dài nhất (ngắn nhất) thỏa điều kiện" gần như luôn là cửa sổ trượt. Trong Swift, hãy chuyển sang `utf8` hoặc `Array(s)` trước khi cần chỉ số — `String.Index` không phải số nguyên.

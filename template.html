@@ -246,10 +246,15 @@ function filtered() {
 function renderList() {
   const cur = currentId();
   const items = filtered();
-  const days = [...new Set(items.map(p => p.date))].sort().reverse();
-  const html = days.map(d =>
-    `<div class="day">${fmtDate(d)}</div>` +
-    items.filter(p => p.date === d).map(p =>
+  // tab Contest nhóm theo kỳ thi (topic đầu tiên), các tab khác nhóm theo ngày giải
+  const byContest = cat === 'contests';
+  const key = p => byContest ? p.topics[0] : p.date;
+  const maxId = g => Math.max(...items.filter(p => key(p) === g).map(p => p.id));
+  const groups = [...new Set(items.map(key))];
+  if (byContest) groups.sort((a, b) => maxId(b) - maxId(a)); else groups.sort().reverse();
+  const html = groups.map(d =>
+    `<div class="day">${byContest ? esc(d) : fmtDate(d)}</div>` +
+    items.filter(p => key(p) === d).map(p =>
       `<a class="item ${p.difficulty}${p.id === cur ? ' active' : ''}" href="#/${p.id}">
         <span class="num">${p.id}</span><span class="name">${esc(p.title)}</span><span class="dot" title="${VI[p.difficulty]}"></span>
       </a>`).join('')

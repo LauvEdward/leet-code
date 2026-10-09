@@ -29,5 +29,30 @@ Cho số nguyên 32 bit có dấu `x`, trả về `x` với các chữ số đ�
 - Số 0 ở cuối tự biến mất: `120 → 021 → 21` vì `res * 10 + 0` khi `res = 0` vẫn là `0`.
 - Trong Swift, tràn số nguyên sẽ **crash** chứ không cuộn vòng như C — nên nếu dùng `Int32` thật thì bắt buộc phải kiểm tra trước khi nhân.
 
+## Ví dụ chạy từng bước
+**Input:** `x = 123` → **Output:** `321`
+
+```
+x=123, res=0   → lấy 3 → res = 3,   x = 12
+x=12,  res=3   → lấy 2 → res = 32,  x = 1
+x=1,   res=32  → lấy 1 → res = 321, x = 0 → dừng
+321 nằm trong khoảng 32 bit → trả về 321
+```
+
+**Input:** `x = -123` → **Output:** `-321`
+
+```
+x=-123 → -123 % 10 = -3 → res = -3,   x = -12
+x=-12  → -12 % 10  = -2 → res = -32,  x = -1
+x=-1   → -1 % 10   = -1 → res = -321, x = 0 → dừng
+```
+
+**Input:** `x = 1534236469` → **Output:** `0`
+
+```
+Đảo xong: res = 9646324351
+9646324351 > 2147483647 (Int32.max) → trả về 0
+```
+
 ## Ghi nhớ
 Bài thao tác chữ số: `% 10` và `/ 10`. Luôn tự hỏi "có tràn không?" và nhớ rằng Swift bẫy lỗi tràn lúc chạy.

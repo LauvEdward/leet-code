@@ -29,5 +29,26 @@ Có nhiều luồng hydro (gọi `hydrogen()`) và oxy (gọi `oxygen()`) tới 
 - Thứ tự in trong một phân tử luôn là `H H O`. Đề chấp nhận mọi hoán vị, nên đây là một đáp án hợp lệ và đơn giản nhất.
 - Vì sao nhóm ba không lẫn sang nhau: H của phân tử sau chỉ qua được `h.wait()` **sau khi** O của phân tử trước đã in và `signal`.
 
+## Ví dụ chạy từng bước
+**Input:** `water = "OOHHHH"` — 2 luồng oxy tới trước, rồi 4 luồng hydro.
+**Output:** `"HHOHHO"` (mọi kết quả mà cứ 3 ký tự gồm 2 `H` + 1 `O` đều được chấp nhận)
+
+Ban đầu `h = 2`, `o = 0`.
+
+```
+O1: lấy oLock → o.wait(): 0 → NGỦ (vẫn giữ oLock)
+O2: chờ oLock
+H1: h.wait(): 2 → 1 → in H → o.signal()   (O1 nhận 1/2)
+H2: h.wait(): 1 → 0 → in H → o.signal()   (O1 nhận 2/2)
+H3: h.wait(): 0 → NGỦ
+H4: h.wait(): 0 → NGỦ
+O1: (đủ 2 H) → in O → h.signal() ×2 → nhả oLock        ← xong phân tử 1: H H O
+H3: (thức dậy) → in H → o.signal()
+H4: (thức dậy) → in H → o.signal()
+O2: lấy oLock → o.wait() ×2 ✓ → in O → h.signal() ×2   ← xong phân tử 2: H H O
+```
+
+Nếu bỏ `oLock`: O1 và O2 có thể mỗi bên lấy được một tín hiệu từ H1, H2 rồi cùng chờ tín hiệu thứ hai, trong khi H3, H4 đang ngủ vì `h = 0` → deadlock.
+
 ## Ghi nhớ
 "Cần `k` đơn vị mới được chạy" → `wait` `k` lần, nhưng nhớ khóa lại để việc gom không bị chia đôi giữa hai luồng. Khi phân tích deadlock, tự hỏi: có tình huống nào hai luồng mỗi bên giữ một nửa không?

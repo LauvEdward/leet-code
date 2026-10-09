@@ -30,5 +30,23 @@ Bốn luồng dùng chung `FizzBuzz(n)`: `fizz()` in "fizz" cho số chia hết 
 - Gọi `act(i)` **trong khi còn giữ khóa** để đảm bảo việc in và việc tăng `i` là một bước không thể bị chen ngang.
 - Nhớ `unlock` trước mọi `return` — quên là các luồng khác treo vĩnh viễn.
 
+## Ví dụ chạy từng bước
+**Input:** `n = 5`
+**Output:** `[1, 2, "fizz", 4, "buzz"]`
+
+Bốn luồng cùng chờ trên một `NSCondition`, biến chung `i = 1`.
+
+```
+i=1: chỉ luồng number thấy "số này của tôi" → in 1 → i=2 → broadcast
+     (fizz, buzz, fizzbuzz thức dậy, kiểm tra lại điều kiện, thấy chưa phải lượt → ngủ tiếp)
+i=2: number   → in 2      → i=3 → broadcast
+i=3: fizz     → in "fizz" → i=4 → broadcast
+i=4: number   → in 4      → i=5 → broadcast
+i=5: buzz     → in "buzz" → i=6 → broadcast
+i=6 > n: cả bốn luồng thức dậy, thấy i > n → unlock và thoát
+```
+
+Với `n = 15`, bước cuối `i=15` thuộc về luồng `fizzbuzz` (chia hết cho cả 3 và 5); hai luồng `fizz` và `buzz` bỏ qua số này vì vị từ của chúng loại trừ bội của số còn lại.
+
 ## Ghi nhớ
 Mẫu chuẩn của biến điều kiện: `lock → while !điều_kiện { wait } → làm việc → broadcast → unlock`. Nhiều luồng với các điều kiện khác nhau cùng chờ trên một biến → dùng `broadcast`.

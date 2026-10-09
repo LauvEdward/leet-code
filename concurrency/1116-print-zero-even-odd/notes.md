@@ -28,5 +28,22 @@ Ba luồng dùng chung `ZeroEvenOdd(n)`: luồng `zero()` chỉ in số 0, luồ
 - `even`: `stride(from: 2, through: n, by: 2)`; `odd`: `stride(from: 1, through: n, by: 2)`. Mỗi luồng tự biết mình in những số nào, không cần biến đếm dùng chung → **không có dữ liệu chia sẻ nào cần khóa**.
 - Số vòng lặp của ba luồng khớp nhau đúng bằng thiết kế (`n` lần `zero`, `⌊n/2⌋` lần `even`, `⌈n/2⌉` lần `odd`) nên cả ba cùng kết thúc, không luồng nào bị kẹt ở `wait()`.
 
+## Ví dụ chạy từng bước
+**Input:** `n = 3`
+**Output:** `"010203"`
+
+Ban đầu `z = 1`, `e = 0`, `o = 0`. Luồng `even` và `odd` ngủ ngay ở `wait()` đầu tiên cho tới khi được gọi.
+
+```
+zero (i=1): z.wait() ✓ → in 0 → i lẻ  → o.signal()
+odd  (i=1): (thức dậy)  → in 1 → z.signal()
+zero (i=2): z.wait() ✓ → in 0 → i chẵn → e.signal()
+even (i=2): (thức dậy)  → in 2 → z.signal() → hết vòng lặp, xong
+zero (i=3): z.wait() ✓ → in 0 → i lẻ  → o.signal() → xong
+odd  (i=3): (thức dậy)  → in 3 → z.signal() (thừa) → xong
+```
+
+Số lần lặp: `zero` 3 lần, `odd` 2 lần (1, 3), `even` 1 lần (2) — khớp nhau nên không luồng nào bị kẹt.
+
 ## Ghi nhớ
 Nhiều hơn hai luồng luân phiên → mỗi luồng một semaphore, luồng đang chạy quyết định đánh thức ai. Thiết kế sao cho mỗi luồng tự suy ra được việc của mình từ biến cục bộ sẽ tránh được hẳn data race.

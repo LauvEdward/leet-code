@@ -1,5 +1,5 @@
 ---
-id: 523004
+id: 4081
 title: Prime Subset Selection II
 slug: prime-subset-selection-ii
 difficulty: Hard
@@ -7,7 +7,7 @@ topics: Weekly Contest 523, Dynamic Programming, Knapsack, Number Theory, Greedy
 date: 2026-10-11
 time: O(π(n) · s)
 space: O(π(n) · s)
-status: Chưa nộp (bài chưa mở ngoài trang contest)
+status: Accepted
 ---
 ## Đề bài
 Cho `n, s ≤ 1000`. Chọn một tập con các số nguyên tố `≤ n` (mỗi số một lần) sao cho: (1) tổng lớn nhất có thể mà không vượt `s`; (2) trong các tập đạt tổng đó, ít phần tử nhất; (3) nếu vẫn hòa, mảng tăng dần nhỏ nhất theo thứ tự từ điển. Trả về mảng đó (rỗng nếu không chọn được gì).

@@ -1,5 +1,5 @@
 ---
-id: 193003
+id: 4076
 title: Longest Resilient Subarray II
 slug: longest-resilient-subarray-ii
 difficulty: Medium
@@ -7,7 +7,7 @@ topics: Biweekly Contest 193, Array, Math, Number Theory
 date: 2026-10-11
 time: O(n + log k mỗi đoạn)
 space: O(1)
-status: Chưa nộp (bài chưa mở ngoài trang contest)
+status: Accepted
 ---
 ## Đề bài
 Giống bài I: mảng con là *resilient* nếu xóa bất kỳ phần tử nào thì tổng phần còn lại vẫn chia hết cho `k`; tìm độ dài lớn nhất. Khác ở ràng buộc `n ≤ 10⁵`.

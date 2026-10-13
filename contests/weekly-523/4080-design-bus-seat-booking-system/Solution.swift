@@ -15,8 +15,8 @@ class BusBooking {
 
         let row = seat.dropFirst()
         var c = 1
-        if seat.first == "A" && cost["B\(row)"] != nil { c = 3 }
-        if seat.first == "D" && cost["C\(row)"] != nil { c = 3 }
+        if seat.first == "A" && cost["B" + row] != nil { c = 3 }
+        if seat.first == "D" && cost["C" + row] != nil { c = 3 }
         cost[seat] = c
         total += c
     }

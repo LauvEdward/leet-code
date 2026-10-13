@@ -1,5 +1,5 @@
 ---
-id: 523003
+id: 4080
 title: Design Bus Seat Booking System
 slug: design-bus-seat-booking-system
 difficulty: Medium
@@ -7,7 +7,7 @@ topics: Weekly Contest 523, Design, Hash Table, Simulation
 date: 2026-10-11
 time: O(1) trung bình mỗi thao tác
 space: O(số ghế đang đặt)
-status: Chưa nộp (bài chưa mở ngoài trang contest)
+status: Accepted
 ---
 ## Đề bài
 Xe buýt có `n` hàng, mỗi hàng bốn ghế `A B C D` (`A`, `D` sát cửa sổ; `A` kề `B`, `D` kề `C`). Đặt ghế giữa luôn mất 1 giây; đặt ghế cửa sổ mất 1 giây, hoặc 3 giây nếu ghế giữa kề nó **đã được đặt**. Cài đặt `toggle(seat)` (đặt nếu trống, hủy nếu đã đặt), `getTotalTime()` (tổng thời gian của các ghế đang đặt, theo đúng thứ tự đã đặt) và `getMinTime()` (tổng thời gian nhỏ nhất nếu được chọn lại thứ tự đặt).
@@ -26,7 +26,7 @@ Xe buýt có `n` hàng, mỗi hàng bốn ghế `A B C D` (`A`, `D` sát cửa s
 4. `getMinTime` trả **số ghế đang đặt**.
 
 ## Ý tưởng triển khai
-- Khóa của bảng băm là chính chuỗi tên ghế (`"A3"`); ghế kề được dựng bằng nội suy chuỗi: `"B\(row)"` với `row = seat.dropFirst()`.
+- Khóa của bảng băm là chính chuỗi tên ghế (`"A3"`); ghế kề được dựng bằng cách nối chuỗi: `"B" + row` với `row = seat.dropFirst()`.
 - `cost[seat] != nil` vừa là phép kiểm tra "đang đặt", nên không cần thêm `Set`.
 - Tham số `n` không cần dùng — bảng băm chỉ chứa ghế đang đặt.
 - Test cục bộ: so `getTotalTime` với một mô phỏng độc lập, và so `getMinTime` với vét cạn mọi thứ tự đặt (tối đa 6 ghế) trên 300 chuỗi thao tác ngẫu nhiên.

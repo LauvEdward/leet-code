@@ -1,5 +1,5 @@
 ---
-id: 193002
+id: 4075
 title: Longest Resilient Subarray I
 slug: longest-resilient-subarray-i
 difficulty: Medium
@@ -7,7 +7,7 @@ topics: Biweekly Contest 193, Array, Math, Enumeration
 date: 2026-10-11
 time: O(n²)
 space: O(1)
-status: Chưa nộp (bài chưa mở ngoài trang contest)
+status: Accepted
 ---
 ## Đề bài
 Cho mảng số dương `nums` (`n ≤ 2500`) và `k`. Một mảng con là *resilient* nếu xóa **bất kỳ** phần tử nào của nó thì tổng phần còn lại vẫn chia hết cho `k` (mảng con dài 1 luôn thỏa). Tìm độ dài mảng con resilient dài nhất.

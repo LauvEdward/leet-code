@@ -1,5 +1,5 @@
 ---
-id: 523002
+id: 4079
 title: Prime Subset Selection I
 slug: prime-subset-selection-i
 difficulty: Medium
@@ -7,7 +7,7 @@ topics: Weekly Contest 523, Math, Greedy, Number Theory, Sieve
 date: 2026-10-11
 time: O(n log log n)
 space: O(n)
-status: Chưa nộp (bài chưa mở ngoài trang contest)
+status: Accepted
 ---
 ## Đề bài
 Cho `n ≤ 10⁶` và `s ≤ 10⁹`. Trong các số nguyên tố không vượt `n`, chọn **nhiều số nhất** có thể (mỗi số một lần) sao cho tổng không vượt `s`. Trả về các số đã chọn theo thứ tự tăng (đáp án nào tối ưu cũng được).

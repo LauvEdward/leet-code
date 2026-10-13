@@ -1,5 +1,5 @@
 ---
-id: 193004
+id: 4077
 title: Minimize Inversions in a Prefix Tree
 slug: minimize-inversions-in-a-prefix-tree
 difficulty: Hard
@@ -7,7 +7,7 @@ topics: Biweekly Contest 193, Trie, Bitmask DP, Divide and Conquer, DFS
 date: 2026-10-11
 time: O(n · độ sâu · log n + Σ 2^m · m) với m ≤ 10 là số con của một nút
 space: O(số nút của cây + 2^m · m)
-status: Chưa nộp (bài chưa mở ngoài trang contest)
+status: Accepted
 ---
 ## Đề bài
 Cho `n ≤ 10⁴` từ khác nhau (chỉ gồm chữ `a…j`, dài tối đa 20) và hoán vị `target`. Dựng cây tiền tố (trie); nút ứng với từ `words[i]` được đánh dấu `i`. Được tự chọn thứ tự các con của mỗi nút. Duyệt tiền thứ tự (ghi nút trước, rồi tới các con) cho ra một dãy chỉ số; đếm số nghịch thế của dãy đó theo vị trí trong `target`. Tìm số nghịch thế nhỏ nhất.

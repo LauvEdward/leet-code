@@ -1,5 +1,5 @@
 ---
-id: 523001
+id: 4078
 title: Three Fibonacci Sum
 slug: three-fibonacci-sum
 difficulty: Easy
@@ -7,7 +7,7 @@ topics: Weekly Contest 523, Math, Simulation
 date: 2026-10-11
 time: O(log n)
 space: O(1)
-status: Chưa nộp (bài chưa mở ngoài trang contest)
+status: Accepted
 ---
 ## Đề bài
 Cho số nguyên `n` (`1 ≤ n ≤ 10⁹`). Trả về `true` nếu `n` bằng tổng của **ba số liên tiếp** trong dãy Fibonacci `0, 1, 1, 2, 3, 5, 8, …`.

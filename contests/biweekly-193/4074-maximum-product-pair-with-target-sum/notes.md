@@ -1,5 +1,5 @@
 ---
-id: 193001
+id: 4074
 title: Maximum Product Pair With Target Sum
 slug: maximum-product-pair-with-target-sum
 difficulty: Easy
@@ -7,7 +7,7 @@ topics: Biweekly Contest 193, Array, Enumeration
 date: 2026-10-11
 time: O(n²)
 space: O(1)
-status: Chưa nộp (bài chưa mở ngoài trang contest)
+status: Accepted
 ---
 ## Đề bài
 Cho mảng `nums` (`n ≤ 100`) và số `target`. Cặp chỉ số khác nhau `(i, j)` hợp lệ nếu `nums[i] + nums[j] == target` và `nums[i] > nums[j]`. Trả về cặp hợp lệ có tích `nums[i] * nums[j]` lớn nhất, không có thì trả `[-1, -1]`.

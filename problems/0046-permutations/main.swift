@@ -1,0 +1,6 @@
+precondition(Solution().permute([1, 2, 3]) == [[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]])
+precondition(Solution().permute([0, 1]) == [[0, 1], [1, 0]])
+precondition(Solution().permute([1]) == [[1]])
+let r = Solution().permute([5, -1, 3, 9, 0, 7])
+precondition(r.count == 720 && Set(r).count == 720 && r.allSatisfy { $0.sorted() == [-1, 0, 3, 5, 7, 9] })
+print("OK")

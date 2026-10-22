@@ -1,0 +1,6 @@
+precondition(Solution().letterCombinations("23") == ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"])
+precondition(Solution().letterCombinations("") == [])
+precondition(Solution().letterCombinations("2") == ["a", "b", "c"])
+precondition(Solution().letterCombinations("79").count == 16)
+precondition(Solution().letterCombinations("2345").count == 81)
+print("OK")

@@ -1,0 +1,7 @@
+precondition(Solution().minMutation("AACCGGTT", "AACCGGTA", ["AACCGGTA"]) == 1)
+precondition(Solution().minMutation("AACCGGTT", "AAACGGTA", ["AACCGGTA", "AACCGCTA", "AAACGGTA"]) == 2)
+precondition(Solution().minMutation("AAAAACCC", "AACCCCCC", ["AAAACCCC", "AAACCCCC", "AACCCCCC"]) == 3)
+precondition(Solution().minMutation("AACCGGTT", "AACCGGTA", []) == -1)
+precondition(Solution().minMutation("AAAAAAAA", "CCCCCCCC", ["AAAAAAAC", "CCCCCCCC"]) == -1)
+precondition(Solution().minMutation("AACCGGTT", "AACCGGTT", ["AACCGGTT"]) == 0)
+print("OK")
